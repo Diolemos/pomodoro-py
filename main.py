@@ -23,6 +23,7 @@ def start_timer():
     if session == 8:
         count_down(LONG_BREAK_MIN * 60)
         title_label.config(text="Break", fg=RED)
+        
     
     elif session % 2 != 0:
         count_down(WORK_MIN * 60)
@@ -31,7 +32,8 @@ def start_timer():
     
     else:
         count_down(SHORT_BREAK_MIN * 60)  
-        title_label.config(text="Break",fg=PINK)      
+        title_label.config(text="Break",fg=PINK) 
+           
     
     
     
@@ -48,7 +50,13 @@ def count_down(count):
         
         window.after(1000, count_down, count -1)
     else:
-        start_timer()    
+        start_timer()   
+        mark = ''
+        global session
+        work_sessions = math.floor(session/2)  
+        for _ in range(work_sessions):
+            mark += "✔"
+            check_marks.config(text=mark)  
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -77,7 +85,7 @@ start_btn.grid(row=2, column=0)
 reset_btn = Button(text="reset")
 reset_btn.grid(row=2,column=2)
 
-check_marks = Label(text="✔", fg=GREEN, bg=YELLOW)
+check_marks = Label( fg=GREEN, bg=YELLOW)
 check_marks.grid(column=1,row=3)
 
 window.mainloop()
