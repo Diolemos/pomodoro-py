@@ -6,15 +6,35 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
+WORK_MIN = 1
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
+session = 0
+
+
 def start_timer():
-    count_down(5 * 60)
+    global session
+    session += 1
+    
+    if session == 8:
+        count_down(LONG_BREAK_MIN * 60)
+        title_label.config(text="Break", fg=RED)
+    
+    elif session % 2 != 0:
+        count_down(WORK_MIN * 60)
+        title_label.config(text="Work",fg=GREEN)
+        
+    
+    else:
+        count_down(SHORT_BREAK_MIN * 60)  
+        title_label.config(text="Break",fg=PINK)      
+    
+    
+    
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def count_down(count):
     
@@ -27,6 +47,8 @@ def count_down(count):
     if count > 0:
         
         window.after(1000, count_down, count -1)
+    else:
+        start_timer()    
 
 # ---------------------------- UI SETUP ------------------------------- #
 
